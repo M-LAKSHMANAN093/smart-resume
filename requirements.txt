@@ -5,3 +5,4 @@ django-widget-tweaks
 pillow
 xhtml2pdf
 dj-database-url
+django-widget-tweaks

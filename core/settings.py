@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     # your apps
     "resume_builder",
     "technical_test",
+    "widget_tweaks",
 ]
 
 
