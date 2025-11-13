@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Smart Resume{% endblock %}</title>
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- AOS Animation Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body class="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen">
+
+  <!-- NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+
+      <div>
+        <a href="{% url 'resume:home' %}" class="text-white text-2xl font-extrabold tracking-wide">
+          Resume Builder
+        </a>
+      </div>
+
+      <div class="space-x-6">
+        {% if user.is_authenticated %}
+          <a href="{% url 'resume:edit' %}" class="text-white hover:text-yellow-300 font-semibold">Edit</a>
+          <a href="{% url 'resume:preview' %}" class="text-white hover:text-yellow-300 font-semibold">Preview</a>
+          <a href="{% url 'logout' %}" class="bg-red-500 px-3 py-2 rounded text-white font-semibold hover:bg-red-600">
+            Logout
+          </a>
+        {% else %}
+          <a href="{% url 'login' %}" class="text-white hover:text-yellow-300 font-semibold">Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto mt-10 px-4">
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- AOS JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+      AOS.init({
+        duration: 1000,
+        once: false,
+      });
+  </script>
+
+</body>
+</html>

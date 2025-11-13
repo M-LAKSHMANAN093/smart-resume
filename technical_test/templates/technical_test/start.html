@@ -1,0 +1,20 @@
+{% extends "resume_builder/base.html" %}
+{% block content %}
+  <h2>Test: {{ category }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for q in questions %}
+      <div class="bg-white p-4 mt-4 rounded shadow">
+        <p><strong>{{ forloop.counter }}. {{ q.text }}</strong></p>
+        {% for c in q.choices.all %}
+          <div>
+            <label><input type="radio" name="{{ q.id }}" value="{{ c.id }}"> {{ c.text }}</label>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <div class="mt-4">
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Submit</button>
+    </div>
+  </form>
+{% endblock %}

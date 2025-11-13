@@ -1,0 +1,121 @@
+{% extends "resume_builder/base.html" %}
+{% block title %}Resume Preview{% endblock %}
+
+{% block content %}
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+    <!-- LEFT: Resume Card -->
+    <div data-aos="fade-right"
+         class="bg-white p-8 rounded-3xl shadow-2xl border border-gray-200 transform hover:scale-[1.02] transition-all duration-300">
+
+        <h1 class="text-3xl font-extrabold text-gray-800 mb-3">Resume Making</h1>
+        <p class="text-gray-600 mb-6">Build your professional resume instantly.</p>
+
+        <hr class="my-4">
+
+        <!-- EDUCATION -->
+        <h3 class="text-xl font-bold text-blue-700 mb-2">Education</h3>
+        {% for edu in profile.educations.all %}
+        <div class="p-3 bg-blue-50 border-l-4 border-blue-600 rounded animate-pulse">
+            <p class="font-semibold">{{ edu.degree }}</p>
+            <p class="text-gray-600">{{ edu.institution }} ({{ edu.start_year }} - {{ edu.end_year }})</p>
+        </div>
+        {% empty %}
+        <p class="text-gray-500">No education added.</p>
+        {% endfor %}
+
+        <!-- SKILLS -->
+        <h3 class="text-xl font-bold text-green-700 mt-6 mb-2">Skills</h3>
+        {% for s in profile.skills.all %}
+        <span class="inline-block bg-green-100 text-green-800 px-4 py-1 rounded-full text-sm font-semibold mr-2 mb-2 hover:bg-green-200">
+            {{ s.name }} ⭐{{ s.level }}
+        </span>
+        {% empty %}
+        <p class="text-gray-500">No skills added.</p>
+        {% endfor %}
+
+        <!-- PROJECTS -->
+        <h3 class="text-xl font-bold text-purple-700 mt-6 mb-2">Projects</h3>
+        {% for p in profile.projects.all %}
+        <div class="p-3 bg-purple-50 border-l-4 border-purple-600 rounded mb-3">
+            <p class="font-semibold">{{ p.title }}</p>
+            <p class="text-gray-700">{{ p.description }}</p>
+        </div>
+        {% empty %}
+        <p class="text-gray-500">No projects added.</p>
+        {% endfor %}
+
+        <div class="mt-6 flex gap-4">
+            <a href="{% url 'resume:download_pdf' %}"
+               class="bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 shadow-lg">
+               Download PDF
+            </a>
+            <a href="{% url 'resume:edit' %}"
+               class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 shadow-lg">
+               Edit Resume
+            </a>
+        </div>
+    </div>
+
+
+    <!-- RIGHT: Technical Test + Animated Cards + Chart -->
+    <div data-aos="fade-left"
+         class="bg-white p-8 rounded-3xl shadow-2xl border border-gray-200">
+
+        <h2 class="text-3xl font-extrabold text-gray-800 mb-6">Technical Test</h2>
+        <p class="text-gray-600 mb-8">Choose a category and test your skills.</p>
+
+        <!-- Animated Cards -->
+        <div class="flex flex-col gap-5">
+
+            <a href="{% url 'technical_test:start_test' 'python' %}"
+               class="bg-gradient-to-r from-purple-600 to-blue-500 text-white px-6 py-4 rounded-2xl text-center text-lg font-semibold shadow-xl transform hover:scale-[1.05] hover:shadow-2xl transition-all duration-300"
+               data-aos="zoom-in">
+               Python Test
+            </a>
+
+            <a href="{% url 'technical_test:start_test' 'django' %}"
+               class="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-6 py-4 rounded-2xl text-center text-lg font-semibold shadow-xl transform hover:scale-[1.05] hover:shadow-2xl transition-all duration-300"
+               data-aos="zoom-in">
+               Django Test
+            </a>
+
+            <a href="{% url 'technical_test:start_test' 'sql' %}"
+               class="bg-gradient-to-r from-indigo-600 to-purple-500 text-white px-6 py-4 rounded-2xl text-center text-lg font-semibold shadow-xl transform hover:scale-[1.05] hover:shadow-2xl transition-all duration-300"
+               data-aos="zoom-in">
+               SQL Test
+            </a>
+
+        </div>
+
+        <!-- Score Chart -->
+        <div class="mt-12">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Your Last Score</h3>
+
+            <canvas id="scoreChart" width="200" height="200"></canvas>
+
+            <script>
+                const ctx = document.getElementById('scoreChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ["Score", "Remaining"],
+                        datasets: [{
+                            data: [7, 3],
+                            backgroundColor: ["#4CAF50", "#ddd"],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        cutout: "70%",
+                    }
+                });
+            </script>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

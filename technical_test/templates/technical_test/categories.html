@@ -1,0 +1,9 @@
+{% extends "resume_builder/base.html" %}
+{% block content %}
+  <h2>Select Category</h2>
+  <ul>
+    <li><a href="{% url 'technical_test:start_test' 'python' %}">Python</a></li>
+    <li><a href="{% url 'technical_test:start_test' 'django' %}">Django</a></li>
+    <li><a href="{% url 'technical_test:start_test' 'sql' %}">SQL</a></li>
+  </ul>
+{% endblock %}
