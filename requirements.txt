@@ -4,3 +4,4 @@ whitenoise
 django-widget-tweaks
 pillow
 xhtml2pdf
+dj-database-url
