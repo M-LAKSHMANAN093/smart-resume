@@ -84,3 +84,8 @@ def download_pdf(request):
         response["Content-Disposition"] = f'attachment; filename="{request.user.username}_resume.pdf"'
         return response
     return HttpResponse("Error generating PDF", status=500)
+
+def delete_education(request, edu_id):
+    education = get_object_or_404(Education, id=edu_id, profile=request.user.profile)
+    education.delete()
+    return redirect("edit_resume")
